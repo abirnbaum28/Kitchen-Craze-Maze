@@ -28,21 +28,17 @@ include data-source
 #######################################################################
 # -------------------- External Data & Constants ---------------------#
 #######################################################################
-
-
-# Design Check Task 7: Uncomment this part when you are ready to load from Google Sheets
    
-# Place the URL of the Google Sheet to use for the maze here!
 ssid = "1VjBrj9KidMnkZxnw4YFNGxC5MCLkFNRrqIsZr7dfMZ8"
  
-# load maze from spreadsheet into List<List<String>>
+# load maze from spreadsheet
 maze-grid  = load-maze(ssid) 
    
 # load item positions from spreadsheet into Table form
 item-table = load-items(ssid) 
 
 
-# Loads all images for the game: You will need to use these constants!
+# Loads all images for the game
 base-url = "https://drive.google.com/thumbnail?id="
 boy-img = image-url(base-url + "1aAHj21rZLFJ_T0xAnE6hNMQFWAWhtO13")
 cookie-img = image-url(base-url + "11y05YkAUPSujhGwCUaslc5CHeiKA7mlW")
@@ -336,23 +332,3 @@ Guideline 2: Ensure no essential information is conveyed by a fixed color alone.
 Task 2: 
    use-arrows is defined on line 151
 |#
-
-
-#|REFLECTION QUESTIONS:
-   Question 1: 
-   By using a list of strings instead of a table, it was easier to convert and sort the strings into values of wall or not wall based on recursion and string-to-value functions within the recursive function. This in turn was simpler, as with a table you could convert each row into a list of data anyway to be transformed into the maze background. However since the list of strings was one big list of smaller lists of strings, the nested lists were not as easy to use.
-   Question 2:
-   For the google sheet configuration of walls, it's good to see a visualization of the dimensions of the maze and what the X and O positions should look like, as well as color. It's not as useful to directly implement and use within the Pyret code. For the list-of-lists version it's easy to use to draw out and convert the strings into blocks of the maze to be visualized through code, however it's not as effective visually and it's hard to tell dimensionality. For the image itself, the maze layout is clearly depicted and can be used as a backdrop for the game. However, its functionality resides in the visual aspect of the game and for coordinate references the image isn't used, rather the coordinate system found from the item-table is.
- Question 3:
-We borrowed the Coord datatype from the design check solution. We realized that by keeping all of our coordinates in pixels, the position of any widget or the player relative to the maze would be less easily readable—i.e. it wouldn't be as clear which maze tile the character was on. The knowledge of the exact pixel was important only for the drawing of the image, so keeping it in terms of tile-number elsewhere improved readability. Also, by keeping the x and y coordinates in one place (rather than having a separate number x and y), we could more easily pass coordinate sets through functions and do things like compare two objects' positions. 
-   Question 4: 
-   Ari's answer: From working on this project, one key insight I've gained is that breaking down larger projects like this one into smaller, more related and manageable parts is key. For instance, the visual aspect (background, end screens, widgets, coordinate system) is one important aspect of the game that can be coded simultaneously, while the widget / stamina functionalities and the key-pressed/reactor functions were also important and worked on in their separate parts one at a time. This proved effective and would be useful in future data organization - related programming projects.
-Isabel's answer: I learned about the magic of helper functions! At times, they helped me avoid bugs by breaking up a large problem into smaller pieces (like in the key-pressed function). At other times, they helped code be more readable: the line       new-coord = get-new-coord(state.char-pos, key, use-arrows) 
-is much more readable than if I input everything that goes into getting that new coordinate. After testing the get-new-coord helper function, I can trust that the right side is getting an accurate new coord, and from the passed arguments, that this depends on the current character coordinate, the key that is pressed, and whether the arrows are being used. Such clarity! Finally, helper functions also made the code less redundant at times. By putting the if-statements involved in determining whether a key corresponded to a left, right, up, down, or no movement in a helper function, the next parts involved in the key-pressed function could be stated one time, rather than copied and pasted within each of those if-statements. Much neater!
-   Question 5:   
-   Ari's answer: While doing this project, some misconceptions/mistakes I had to work through included figuring out a way to combine different sectors of the project within the same parts of code / helper functions. For instance, the key-pressed function, the widget functions, and the game-drawing functions came hand in hand and used the same expressions despite being coded in different parts. Another misconception/mistake was that in creating our code, it would be easier to reference the code I previously wrote or deciphered in creating new functions for the project versus functions or code my project partner wrote on separate terms. When we came together to finalize the project it was better for both of us to go over the functions that we both wrote and continued on. Another miscellaneous thing was that I had a misconception where I thought cases could only be used for recursion, while it's also a helpful tool to reference the categories of different data types from a given data entry in a function.
-Isabel's answer: I was very turned around when I learned that if-blocks have to end in expressions. I wanted to define each component of the new gameState in if statements and then output the entire new gameState at the end of the key-pressed function, after the if-block ended. But that was not allowed! I had to get creative to work around this. I'm not sure I picked the cleanest option, but the shift in my conception of if blocks made me think more critically about the different possible cases of the character's movement.
-   Question 6:
-   Ari's questions: After working on this project, I'm wondering why certain orders of functions matter in terms of referencing certain expressions? For some functions in our code, it references functions that are defined farther down but the code still runs. I also wonder for new data entries why there must be a section that defines when it's null/empty?
-Isabel's questions: Why must if blocks end in expressions? Will this be true in other languages? And if not, what is the purpose of this restriction in Pyret? Does it make us think more clearly about programming? What are the other languages sweeping under the rug, so to speak?
-                              |#
